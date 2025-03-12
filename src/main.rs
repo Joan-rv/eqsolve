@@ -63,7 +63,6 @@ fn main() {
     let x_newton = newton(f, 2.0, error);
     let newton_time = now.elapsed();
 
-    println!("{}", precision);
     println!("Solution with bisection:\t{:.*}, took: {:?}", precision, x_bisection, bisection_time);
     println!("Solution with secant:\t\t{:.*}, took: {:?}", precision,  x_secant, secant_time);
     println!("Solution with newton:\t\t{:.*}, took: {:?}", precision, x_newton, newton_time);
