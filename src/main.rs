@@ -41,12 +41,27 @@ fn newton(f: fn(f64) -> f64, mut x: f64, error: f64) -> f64 {
 }
 
 fn main() {
+    use std::time::Instant;
     let f = |x: f64| {x*x - 2.0};
     let error: f64 = 5e-12;
     let precision = -(2.0 * error).log10().round() as usize;
+
+
+    let now = Instant::now();
+    let x_bisection = bisection(f, 1.0, 3.0, error);
+    let bisection_time = now.elapsed();
+
+    let now = Instant::now();
+    let x_secant = secant(f, 1.0, 3.0, error);
+    let secant_time = now.elapsed();
+
+    let now = Instant::now();
+    let x_newton = newton(f, 2.0, error);
+    let newton_time = now.elapsed();
+
     println!("{}", precision);
-    println!("Solution with newton:\t\t{:.*}", precision, newton(f, 2.0, error));
-    println!("Solution with secant:\t\t{:.*}", precision,  secant(f, 1.0, 3.0, error));
-    println!("Solution with bisection:\t{:.*}", precision, bisection(f, 1.0, 3.0, error));
+    println!("Solution with bisection:\t{:.*}, took: {:?}", precision, x_bisection, bisection_time);
+    println!("Solution with secant:\t\t{:.*}, took: {:?}", precision,  x_secant, secant_time);
+    println!("Solution with newton:\t\t{:.*}, took: {:?}", precision, x_newton, newton_time);
     println!("Real solution:\t\t\t{:.*}", precision, 2.0_f64.sqrt());
 }
