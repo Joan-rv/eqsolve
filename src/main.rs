@@ -1,15 +1,19 @@
 fn bisection(f: fn(f64) -> f64, mut b: f64, mut a: f64, error: f64) -> f64 {
     let mut x = (a + b) / 2.0;
+    let mut f_a = f(a);
+    let mut f_x = f(x);
     while a - b > error {
-        if f(x) == 0.0 {
+        if f_x == 0.0 {
             break;
         }
-        if f(a)*f(x) < 0.0 {
+        if f_a*f_x < 0.0 {
             b = x;
         } else {
             a = x;
+            f_a = f_x;
         }
         x = (a + b) / 2.0;
+        f_x = f(x);
     }
     x
 }
